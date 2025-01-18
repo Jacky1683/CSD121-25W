@@ -1,0 +1,7 @@
+User Name: Zen Patel
+User Age: 22
+Entered Numbers: [111, 222, 333, 444, 555]
+Calculated Average: 333.0
+
+
+
