@@ -81,21 +81,19 @@ public class Board {
     private PlayerToken getWinner() {
         // Check the rows and columns
         for (int i = 0; i < 3; i++) {
-            // Check if the row is all the same
             if (board[i][0] != null && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
-                return board[i][0];
+                return board[i][0]; // Row check
             }
-            // Check if the column is all the same
             if (board[0][i] != null && board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
-                return board[0][i];
+                return board[0][i]; // Column check
             }
         }
         // Check the diagonals
         if (board[0][0] != null && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
-            return board[0][2];
+            return board[0][0]; // ✅ Fixed: return board[0][0] for \ diagonal
         }
         if (board[0][2] != null && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
-            return board[0][2];
+            return board[0][2]; // ✅ Correct: return board[0][2] for / diagonal
         }
         return null;
     }
