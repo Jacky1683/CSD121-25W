@@ -29,13 +29,13 @@ Ans....  1). Polymorphism: The Key to Flexibility
  - Each specific Player subclass implements this method in its own way (e.g., human input for HumanPlayer, AI logic for Linus and Omola).
  - The game logic in TicTacToeGame doesn't need to know how a player picks a move—it just calls pickNextMove() and gets a valid move.
 
-    3). Encapsulation: Keeping Player Logic Separate
+3). Encapsulation: Keeping Player Logic Separate
       - Each Player subclass encapsulates its own logic for picking a move, meaning:
         ( HumanPlayer prompts the user for input. )
         ( Linus follows a predefined AI strategy. )
         ( Omola may use a different algorithm. )
 
-    4). The Role of Console.promptForPlayer()
+4). The Role of Console.promptForPlayer()
  - The only minor change required when adding new Player types is inside Console.promptForPlayer(), where we instantiate the correct Player based on user input:
 
    public static Player promptForPlayer(PlayerToken token) {
@@ -60,7 +60,27 @@ Ans....  1). Polymorphism: The Key to Flexibility
 
 
 
-   5). Summary: Why Our Design Is in a Good Place,
+5).  Correction for Main: Missing Game Initialization.
+- The rubric mentioned a missing game initialization in Main.
+  To fix this, ensure that Main correctly initializes and runs a TicTacToeGame instance:
+
+    public class Main {
+    public static void main(String[] args) {
+        Player player1 = Console.promptForPlayer(PlayerToken.X);
+        Player player2 = Console.promptForPlayer(PlayerToken.O);
+
+        TicTacToeGame game = new TicTacToeGame(player1, player2);
+        game.play();
+    }
+}
+
+ 
+-  This ensures that the game is properly initialized and started.
+   With this in place, Main successfully sets up a TicTacToeGame and allows any Player subclass to be used.
+
+
+
+6). Summary: Why Our Design Is in a Good Place,
      
   -  We can add unlimited new player types without changing game logic.
   -  Polymorphism ensures pickNextMove() works for any player.
