@@ -18,23 +18,49 @@ public class Main {
     public static List<Recipe> getQuickRecipes(DataService dataService) {
         try {
             var recipes = dataService.getRecipes();
-            return recipes.stream().filter( r -> r.totalTime() <= 15 ).toList();
-        } catch(Exception e ) {
+            return recipes.stream().filter(r -> r.totalTime() <= 15).toList();
+        } catch (Exception e) {
             logger.error("Error while getting quick recipes: " + e.getMessage());
             logger.debug("Stack trace: " + Arrays.toString(e.getStackTrace()));
-            return List.of();
+            return List.of(); // Return an empty list if error
         }
     }
 
-    // TODO: implement the searchRecipes method
+    /**
+     * Search for recipes whose name or description contains the given search term (case insensitive)
+     * @param searchTerm the term to search for
+     * @param dataService a service that provides access to recipe data
+     * @return a list of matching recipes
+     */
+    public static List<Recipe> searchRecipes(String searchTerm, DataService dataService) {
+        try {
+            var recipes = dataService.getRecipes();
+            return recipes.stream()
+                    .filter(r ->
+                            r.name().toLowerCase().contains(searchTerm.toLowerCase()) ||
+                                    r.description().toLowerCase().contains(searchTerm.toLowerCase())
+                    )
+                    .toList();
+        } catch (Exception e) {
+            logger.error("Error while searching recipes: " + e.getMessage());
+            logger.debug("Stack trace: " + Arrays.toString(e.getStackTrace()));
+            return List.of(); // Return an empty list if error
+        }
+    }
 
     public static void main(String[] args) {
-        // Here, we INJECT a concrete implementation of the DataService interface
-        // that allows us to get data from an SQLite database
-        var quickRecipes = getQuickRecipes(new SqliteDataService());
+        // INJECT SqliteDataService (implements DataService interface)
+        var dataService = new CsvDataService();
+
+
+        // Print quick recipes (<= 15 min)
+        var quickRecipes = getQuickRecipes(dataService);
         System.out.println("Quick Recipes:");
         quickRecipes.forEach(System.out::println);
 
-        // TODO: use your searchRecipes method with a SqliteDataService object
+        // Use the searchRecipes method with the same data service
+        var searchResults = searchRecipes("chicken", dataService);
+        System.out.println("\nSearch Results for 'chicken':");
+        searchResults.forEach(System.out::println);
     }
 }
