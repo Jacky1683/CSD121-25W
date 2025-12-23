@@ -14,7 +14,6 @@ package lab6;
  * See ai-use-statement.md for detailed instructions on using these services.
  */
 public class Main {
-    
     public static void main(String[] args) {
         System.out.println("=== Text-to-Video with Audio Generation ===\n");
         

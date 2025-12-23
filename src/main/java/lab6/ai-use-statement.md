@@ -122,7 +122,6 @@ Here's a conceptual example of how you might integrate with AI services:
 
 ```java
 public class TextToVideoGenerator {
-    
     private final String apiKey;
     private final HttpClient httpClient;
     
